@@ -6,7 +6,6 @@ namespace FieldFallback.Validators
 {
    public class FallbackValidator : StandardValidator
    {
-     
       protected override ValidatorResult Evaluate()
       {
          Field field = GetField();

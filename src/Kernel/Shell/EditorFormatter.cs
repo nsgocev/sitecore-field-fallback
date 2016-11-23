@@ -17,12 +17,12 @@ namespace FieldFallback.Shell
 {
     public class FallbackEditorFormatter : Sitecore.Shell.Applications.ContentEditor.EditorFormatter
     {
-        public override void RenderField(Control parent, Editor.Field field, Item fieldType, bool readOnly)
+        public override void RenderField(Control parent, Editor.Field field, bool readOnly)
         {
             Assert.ArgumentNotNull(parent, "parent");
             Assert.ArgumentNotNull(field, "field");
             Field itemField = field.ItemField;
-
+            Item fieldType = GetFieldType(itemField);
             if (fieldType != null)
             {
                 if (!itemField.CanWrite)
@@ -36,8 +36,6 @@ namespace FieldFallback.Shell
                 RenderMarkerEnd(parent);
             }
         }
-
-      
 
         public new void RenderLabel(Control parent, Editor.Field field, Item fieldType, bool readOnly)
         {
