@@ -111,6 +111,7 @@ namespace FieldFallback.Shell
                     builder.Append(Translate.Text("original value"));
                     flag = true;
                 }
+
                 if (FallbackValuesManager.Provider.FieldContainsFallbackValue(itemField, Arguments.Item.Language))
                 {
                     if (flag)

@@ -25,7 +25,7 @@ namespace FieldFallback.Data
     {
         private SiteManager _siteManager;
         private IFallbackSupportCache _supportCache;
-
+        
         /// <summary>
         /// Gets or sets the supported content paths.
         /// <para>Set via Config file reflection</para>
@@ -79,7 +79,7 @@ namespace FieldFallback.Data
 
             SupportedDatabaseNames = databases.Split(new[] { '|', ' ', ',' });
             SupportedSiteNames = sites.Split(new[] { '|', ' ', ',' });
-
+            
             _siteManager = new SiteManager();
             _supportCache = new FallbackSupportCache();
         }
