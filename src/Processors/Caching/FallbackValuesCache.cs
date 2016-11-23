@@ -52,7 +52,7 @@ namespace FieldFallback.Processors.Caching
             {
                 // we need to clear all child items that have this field
                 // get cache keys for all items in this subtree
-                List<string> keys = base.InnerCache.GetCacheKeys(GetGeneralItemKeyPrefix(item)).Cast<string>().ToList();
+                List<string> keys = base.InnerCache.GetCacheKeys().Cast<string>().ToList();
                 string sfieldID = fieldID.ToString();
                 foreach (string key in keys)
                 {
