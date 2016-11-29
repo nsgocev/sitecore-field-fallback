@@ -8,19 +8,7 @@ namespace FieldFallback.Sites
     {
         private const string SITE_ENABLE_FALLBACK_ATTRIBUTE = "enableFallback";
         private const string SITE_ENABLED_VALUE = "true";
-
-        /// <summary>
-        /// Enables the site.
-        /// </summary>
-        /// <param name="siteName">Name of the site.</param>
-        public void EnableSite(string siteName)
-        {
-            SiteInfo site = Sitecore.Configuration.Factory.GetSiteInfo(siteName);
-            if (site != null)
-            {
-                site.Properties.Add(SITE_ENABLE_FALLBACK_ATTRIBUTE, SITE_ENABLED_VALUE);
-            }
-        }
+      
 
         /// <summary>
         /// Determines whether [is fallback enabled] [the specified site].

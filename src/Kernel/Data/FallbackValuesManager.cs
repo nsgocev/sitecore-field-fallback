@@ -11,14 +11,14 @@ namespace FieldFallback.Data
     {
 
         private static readonly
-            Lazy<ProviderHelper<StandardValuesProvider, StandardValuesProviderCollection>>
+            ProviderHelper<StandardValuesProvider, StandardValuesProviderCollection>
             ProviderHelper;
 
         public static FallbackValuesProvider Provider
         {
             get
             {
-                return ProviderHelper.Value.Provider as FallbackValuesProvider;
+                return ProviderHelper.Provider as FallbackValuesProvider;
             }
         }
 
@@ -26,14 +26,9 @@ namespace FieldFallback.Data
         {
             if (ProviderHelper == null)
             {
-                ProviderHelper =
-                    new Lazy<ProviderHelper<StandardValuesProvider, StandardValuesProviderCollection>>(
-                        () =>
-                            ServiceLocator.ServiceProvider
-                                .GetRequiredService<ProviderHelper<StandardValuesProvider, StandardValuesProviderCollection>>());
+                ProviderHelper = ServiceLocator.ServiceProvider
+                    .GetRequiredService<ProviderHelper<StandardValuesProvider, StandardValuesProviderCollection>>();
             }
-        }       
-
-
+        }
     }
 }

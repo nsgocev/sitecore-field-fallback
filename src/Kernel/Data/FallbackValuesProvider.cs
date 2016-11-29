@@ -106,8 +106,6 @@ namespace FieldFallback.Data
                             _initializingFallback = true;
 
                             EnableDatabases();
-
-                            EnableSites();
                         }
                         finally
                         {
@@ -411,17 +409,7 @@ namespace FieldFallback.Data
                 InitializeEventHandlers(database);
             }
         }
-
-        private void EnableSites()
-        {
-            // add properties to each supported site definition
-            foreach (string siteName in SupportedSiteNames)
-            {
-                Logger.Info("FallbackProvider enabled for the '{0}' site.", siteName);
-                _siteManager.EnableSite(siteName);
-            }
-        }
-
+       
         /// <summary>
         /// Initializes the event handlers.
         /// </summary>
