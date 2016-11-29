@@ -125,10 +125,17 @@ namespace FieldFallback.Data
         /// <returns></returns>
         public sealed override string GetStandardValue(Field field)
         {
+          
             Assert.ArgumentNotNull(field, "field");
 
             // normal standard values take priority over fallback
             string value = base.GetStandardValue(field);
+
+            if (Sitecore.Context.Site == null)
+            {
+                return value;
+            }
+
             if (value != null)
             {
                 return value;
@@ -140,6 +147,7 @@ namespace FieldFallback.Data
                 return value;
             }
 
+          
             // lets try to get a fallback value for this field...
             return GetFallbackValue(field) ?? value;
         }
@@ -254,7 +262,7 @@ namespace FieldFallback.Data
         {
             if (FieldFallback.Data.FallbackDisabler.CurrentValue == FallbackStates.Disabled)
             {
-                //Logger.Debug("@ Fallback Disabled by Disabler [{0}:{1}]", field.Item.Name, field.Name);
+                Logger.Debug("@ Fallback Disabled by Disabler [{0}:{1}]", field.Item.Name, field.Name);
                 return false;
             }
 
@@ -262,14 +270,14 @@ namespace FieldFallback.Data
 
             if (IsIgnoredField(field))
             {
-                //Logger.Debug("@ Field {0} is ignored", field.Name);
+                Logger.Debug("@ Field {0} is ignored", field.Name);
                 return false;
             }
 
             // Check the cache to see if this field is supported
             if (_supportCache.GetFallbackSupport(field).HasValue)
             {
-                //Logger.Debug("@ IsFallbackSupported (cache hit - {0}) ", SupportCache.GetFallbackSupport(field).Value);
+                Logger.Debug("@ IsFallbackSupported (cache hit - {0}) ", _supportCache.GetFallbackSupport(field).Value);
                 return _supportCache.GetFallbackSupport(field).Value;
             }
 
@@ -279,7 +287,7 @@ namespace FieldFallback.Data
             // see if we know this item should be skipped
             if (SkipItemCache.IsItemSkipped(item))
             {
-                //Logger.Debug("@ IsFallbackSupported (SkipItemCache cache hit) ");
+                Logger.Debug("@ IsFallbackSupported (SkipItemCache cache hit) ");
                 return false;
             }
 
@@ -291,8 +299,8 @@ namespace FieldFallback.Data
             if (Sitecore.Context.Site == null && Sitecore.Configuration.Settings.GetBoolSetting("ContentSearch.ParallelIndexing.Enabled", false))
             {
                 Logger.Warn("Sitecore.Context.Site was null and ContentSearch.ParallelIndexing.Enabled was true. Manually setting to 'shell' site. For more info see here: https://github.com/HedgehogDevelopment/sitecore-field-fallback/issues/3", this);
-                Sitecore.Sites.SiteContext site = Sitecore.Sites.SiteContextFactory.GetSiteContext("shell");
-                Sitecore.Context.Site = site;
+              
+                Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("shell");
             }
 
             Logger.Debug(">> IsFallbackSupported - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
